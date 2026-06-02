@@ -18,24 +18,7 @@
 
 This application lets you **visually explore how data travels securely over an unreliable network**. Every layer of the classic transmission stack is simulated and inspectable:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                       SENDER                                │
-│  Plaintext → Encrypt → Encode (Hamming/CRC) → Transmit     │
-└────────────────────────────┬────────────────────────────────┘
-                             │
-                    ╔════════▼════════╗
-                    ║  NOISY CHANNEL  ║
-                    ║ Single / Multi  ║
-                    ║  / Burst Errors ║
-                    ╚════════╤════════╝
-                             │
-┌────────────────────────────▼────────────────────────────────┐
-│                      RECEIVER                               │
-│  Receive → Detect/Correct → Decrypt → ACK or NACK          │
-│              (automatic retransmission on NACK)             │
-└─────────────────────────────────────────────────────────────┘
-```
+![Architecture Overview](docs/screenshots/architecture_overview.jpeg)
 
 ---
 
@@ -56,15 +39,52 @@ This application lets you **visually explore how data travels securely over an u
 
 ## Screenshots
 
-> Run the app and explore each tab:
+### Simulation Tab — Control Room
+Configure message, encryption, coding scheme, error model and probability, then fire a transmission and watch the ACK/NACK pipeline live.
 
-| Simulation Tab | Frame Analysis |
-|---|---|
-| Configure message, encryption, coding, and channel — then fire | Inspect every bit of every frame, highlighting error positions |
+![Simulation Tab](docs/screenshots/simulation_tab.png)
 
-| Statistics & Charts | Comparison Mode |
-|---|---|
-| BER curves, throughput, retransmission rates — live Matplotlib | Run two configurations side-by-side to compare error resilience |
+---
+
+### Frame Analysis — Transmission Stages
+Side-by-side view of every transformation: original plaintext → encrypted payload → encoded frame → noisy frame → corrected frame → final decrypted message.
+
+![Frame Analysis Stages](docs/screenshots/frame_analysis_stages.png)
+
+---
+
+### Frame Analysis — Binary Inspector
+Bit-level inspection of the frame with parity positions highlighted, channel-modified bits marked in red, and Hamming-corrected bits in green.
+
+![Frame Analysis Inspector](docs/screenshots/frame_analysis_inspector.png)
+
+---
+
+### Protocol Event Log
+Timestamped chronological trace of every protocol event — prepare, send, channel, NACK, retry, drop — with search/filter and one-click export.
+
+![Logs Tab](docs/screenshots/logs_tab.png)
+
+---
+
+### Network Reliability Dashboard
+Session-wide KPIs (BER, throughput, retransmission rate, success rate) with live Matplotlib charts: retransmissions per packet, detected vs corrected errors, success trend.
+
+![Statistics Tab](docs/screenshots/statistics_tab.png)
+
+---
+
+### Experiment Matrix — Comparison Mode
+Automated batch runs across all four combinations (AES/Substitution × Hamming/CRC) under identical noise conditions, producing a side-by-side results matrix.
+
+![Comparison Tab](docs/screenshots/comparison_tab.png)
+
+---
+
+### Settings — Environment Defaults
+Persist default theme, encryption mode, coding scheme, retry limit, error model and probability so every session starts from a stable baseline.
+
+![Settings Tab](docs/screenshots/settings_tab.png)
 
 ---
 
